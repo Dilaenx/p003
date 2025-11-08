@@ -1,6 +1,7 @@
 package edu.icet.ecom.controller;
 
 import edu.icet.ecom.dto.Customer;
+import edu.icet.ecom.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,7 +10,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/customer")
+@CrossOrigin
 public class CustomerController {
+    @Autowired
+    CustomerService service;
+
     List<Customer> customerList = new ArrayList<>();
     @GetMapping("/getname")
     public String getName(){
@@ -17,9 +22,8 @@ public class CustomerController {
     }
     @GetMapping("/getAllCustomer")
     public List<Customer> getCustomer(){
-        customerList.add(new Customer("001","Dilaen",769759851,"kadwatha",25.0));
-        customerList.add(new Customer("002","Dinuli",769759851,"Merigama",25.0));
-        return customerList;
+
+        return service.getAll();
     }
     @PostMapping("/addcustomer")
     public Customer addCustomer(@RequestBody Customer customer){
